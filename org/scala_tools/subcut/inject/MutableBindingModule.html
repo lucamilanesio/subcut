@@ -38,13 +38,14 @@ strongly discouraged. Use NewBindingModule instead to ensure immutability and th
 BindingModule. This is the recommended way to have rebindings on a test-by-test basis and is
 thread safe, as each test gets a new copy of the binding module and will not interfere with others.</p><p>An example usage will look like this:
 <pre>
-class SomeBindings extends NewBindingModule ({ module =>
-  module.bind[Trait1] toInstance new Class1Impl
+class SomeBindings extends NewBindingModule ({ implicit module =>
+  import module._
+  bind [Trait1] toSingle new Class1Impl
 })
 
 // in a test...
 SomeBindings.modifyBindings { testBindings =>  // holds mutable copy of SomeBindings
-  module.bind[Trait1] toInstance mockClass1Impl  // where the mock has been set up already
+  module.bind[Trait1] toSingle mockClass1Impl  // where the mock has been set up already
   // run tests using the mockClass1Impl
 }  // coming out of scope destroys the temporary mutable binding module
 </pre>
@@ -129,20 +130,24 @@ SomeBindings.modifyBindings { testBindings =>  // holds mutable copy of SomeBind
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li visbl="pub" name="org.scala_tools.subcut.inject.BindingModule#::" data-isabs="false">
-      <a id="::(BindingModule):BindingModule"></a>
+    </li><li visbl="pub" name="org.scala_tools.subcut.inject.MutableBindingModule#&lt;~" data-isabs="false">
+      <a id="&lt;~(BindingModule):Unit"></a>
       <h4 class="signature">
       <span class="kind">def</span>
       <span class="symbol"> 
-        <span class="name">::</span>
+        <span class="name">&lt;~</span>
         
-        <span class="params">(<span name="other">other: <a name="org.scala_tools.subcut.inject.BindingModule" class="extype" href="BindingModule.html">BindingModule</a></span>)</span><span class="result">: <a name="org.scala_tools.subcut.inject.BindingModule" class="extype" href="BindingModule.html">BindingModule</a></span>
+        <span class="params">(<span name="other">other: <a name="org.scala_tools.subcut.inject.BindingModule" class="extype" href="BindingModule.html">BindingModule</a></span>)</span><span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Cons this module with another.</p><div class="fullcomment"><div class="comment cmt"><p>Cons this module with another. The resulting module will include all bindings from both modules, with this
-module winning if there are common bindings (binding override).</p></div><dl class="paramcmts block"><dt class="param">other</dt><dd class="cmt"><p>another BindingModule to cons with this one. Any duplicates will favor the bindings from this
-rather than other.
-</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.scala_tools.subcut.inject.BindingModule" class="extype" href="BindingModule.html">BindingModule</a></dd></dl></div>
+      <p class="shortcomment cmt">Convenience form of merge with replace, can be used like this:</p><div class="fullcomment"><div class="comment cmt"><p>Convenience form of merge with replace, can be used like this:</p><p><pre>
+class SomeBindings extends NewBindingModule ({ module =>
+  module <~ OtherModule1   // include all bindings from Module1
+  module <~ OtherModule2   // include all bindings from Module2, overwriting as necessary
+  module.bind[Trait1] toSingle new Class1Impl
+})
+</pre>
+</p></div></div>
     </li><li visbl="pub" name="scala.AnyRef#==" data-isabs="false">
       <a id="==(AnyRef):Boolean"></a>
       <h4 class="signature">
@@ -188,13 +193,13 @@ rather than other.
       </h4>
       
     </li><li visbl="pub" name="org.scala_tools.subcut.inject.MutableBindingModule#bindings" data-isabs="false">
-      <a id="bindings:Map[BindingKey, Any]"></a>
+      <a id="bindings:Map[org.scala_tools.subcut.inject.BindingKey[_], Any]"></a>
       <h4 class="signature">
       <span class="kind">def</span>
       <span class="symbol"> 
         <span class="name">bindings</span>
         
-        <span class="result">: <span name="scala.collection.immutable.Map" class="extype">Map</span>[<span name="org.scala_tools.subcut.inject.BindingKey" class="extype">BindingKey</span>, <span name="scala.Any" class="extype">Any</span>]</span>
+        <span class="result">: <span name="scala.collection.immutable.Map" class="extype">Map</span>[org.scala_tools.subcut.inject.BindingKey[_], <span name="scala.Any" class="extype">Any</span>]</span>
       </span>
       </h4>
       <p class="shortcomment cmt">Abstract binding map definition</p><div class="fullcomment"><div class="comment cmt"><p>Abstract binding map definition</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.scala_tools.subcut.inject.MutableBindingModule" class="extype" href="">MutableBindingModule</a> → <a name="org.scala_tools.subcut.inject.BindingModule" class="extype" href="BindingModule.html">BindingModule</a></dd></dl></div>
@@ -314,7 +319,7 @@ binding module cannot be reversed.
         <span class="params">()</span><span class="result">: java.lang.Class[_]</span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#hashCode" data-isabs="false">
       <a id="hashCode():Int"></a>
       <h4 class="signature">
@@ -327,27 +332,27 @@ binding module cannot be reversed.
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li visbl="pub" name="org.scala_tools.subcut.inject.BindingModule#inject" data-isabs="false">
-      <a id="inject[T](Class[T],Option[String]):T"></a>
+      <a id="inject[T](Option[String])(Manifest[T]):T"></a>
       <h4 class="signature">
       <span class="kind">def</span>
       <span class="symbol"> 
         <span class="name">inject</span>
         <span class="tparams">[<span name="T">T</span>]</span>
-        <span class="params">(<span name="clazz">clazz: Class[T]</span>, <span name="name">name: <span name="scala.Option" class="extype">Option</span>[String]</span>)</span><span class="result">: T</span>
+        <span class="params">(<span name="name">name: <span name="scala.Option" class="extype">Option</span>[String]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: Manifest[T]</span>)</span><span class="result">: T</span>
       </span>
       </h4>
       <p class="shortcomment cmt">Inject for a given class with optional name.</p><div class="fullcomment"><div class="comment cmt"><p>Inject for a given class with optional name. Whatever is bound to the class will be provided.
 If the name is given, only a matching class/name pair will be used, and it will not fall back
-to just providing an implementation based only on the class.</p></div><dl class="paramcmts block"><dt class="param">clazz</dt><dd class="cmt"><p>the class to match for the binding match</p></dd><dt class="param">name</dt><dd class="cmt"><p>an optional name to use for the binding match</p></dd><dt>returns</dt><dd class="cmt"><p>the instance the binding was configured to return
+to just providing an implementation based only on the class.</p></div><dl class="paramcmts block"><dt class="param">name</dt><dd class="cmt"><p>an optional name to use for the binding match</p></dd><dt>returns</dt><dd class="cmt"><p>the instance the binding was configured to return
 </p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.scala_tools.subcut.inject.BindingModule" class="extype" href="BindingModule.html">BindingModule</a></dd></dl></div>
     </li><li visbl="pub" name="org.scala_tools.subcut.inject.BindingModule#injectOptional" data-isabs="false">
-      <a id="injectOptional[T](BindingKey):Option[T]"></a>
+      <a id="injectOptional[T](BindingKey[T]):Option[T]"></a>
       <h4 class="signature">
       <span class="kind">def</span>
       <span class="symbol"> 
         <span class="name">injectOptional</span>
         <span class="tparams">[<span name="T">T</span>]</span>
-        <span class="params">(<span name="key">key: <span name="org.scala_tools.subcut.inject.BindingKey" class="extype">BindingKey</span></span>)</span><span class="result">: <span name="scala.Option" class="extype">Option</span>[T]</span>
+        <span class="params">(<span name="key">key: <span name="org.scala_tools.subcut.inject.BindingKey" class="extype">BindingKey</span>[T]</span>)</span><span class="result">: <span name="scala.Option" class="extype">Option</span>[T]</span>
       </span>
       </h4>
       <p class="shortcomment cmt">Retrieve an optional binding for class T with the given BindingKey, if no
@@ -360,19 +365,19 @@ returned.</p></div><dl class="paramcmts block"><dt class="param">key</dt><dd cla
 binding is found.
 </p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.scala_tools.subcut.inject.BindingModule" class="extype" href="BindingModule.html">BindingModule</a></dd></dl></div>
     </li><li visbl="pub" name="org.scala_tools.subcut.inject.BindingModule#injectOptional" data-isabs="false">
-      <a id="injectOptional[T](Class[T],Option[String]):Option[T]"></a>
+      <a id="injectOptional[T](Option[String])(Manifest[T]):Option[T]"></a>
       <h4 class="signature">
       <span class="kind">def</span>
       <span class="symbol"> 
         <span class="name">injectOptional</span>
         <span class="tparams">[<span name="T">T</span>]</span>
-        <span class="params">(<span name="clazz">clazz: Class[T]</span>, <span name="name">name: <span name="scala.Option" class="extype">Option</span>[String]</span>)</span><span class="result">: <span name="scala.Option" class="extype">Option</span>[T]</span>
+        <span class="params">(<span name="name">name: <span name="scala.Option" class="extype">Option</span>[String]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: Manifest[T]</span>)</span><span class="result">: <span name="scala.Option" class="extype">Option</span>[T]</span>
       </span>
       </h4>
       <p class="shortcomment cmt">Retrieve an optional binding for class T with the optional name provided.</p><div class="fullcomment"><div class="comment cmt"><p>Retrieve an optional binding for class T with the optional name provided. If no
 binding is available with the given class and optional name, a None will be returned,
 otherwise the binding will be evaluated and an instance of a subclass of T will be
-returned.</p></div><dl class="paramcmts block"><dt class="param">clazz</dt><dd class="cmt"><p>the class to match a binding for</p></dd><dt class="param">name</dt><dd class="cmt"><p>Option[String] name, if present will be matched, if None only class will
+returned.</p></div><dl class="paramcmts block"><dt class="param">name</dt><dd class="cmt"><p>Option[String] name, if present will be matched, if None only class will
 be used for lookup (note, this also means any named bindings of the same type will
 not be matched)</p></dd><dt>returns</dt><dd class="cmt"><p>Option[T] containing either an instance subtype of T, or None if no matching
 binding is found.
@@ -618,8 +623,24 @@ supply a repeated parameter list of BindingModules to merge. The order for confl
 last in wins, so if you have <code>withBindingModule(ModuleA, ModuleB)</code> and both ModuleA and ModuleB
 bind the same class (and optional name), ModuleB will win.
 </p></div></div>
+    </li><li visbl="pub" name="org.scala_tools.subcut.inject.BindingModule#~" data-isabs="false">
+      <a id="~(BindingModule):BindingModule"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">~</span>
+        
+        <span class="params">(<span name="other">other: <a name="org.scala_tools.subcut.inject.BindingModule" class="extype" href="BindingModule.html">BindingModule</a></span>)</span><span class="result">: <a name="org.scala_tools.subcut.inject.BindingModule" class="extype" href="BindingModule.html">BindingModule</a></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Merge this module with another.</p><div class="fullcomment"><div class="comment cmt"><p>Merge this module with another. The resulting module will include all bindings from both modules, with this
+module winning if there are common bindings (binding override).</p></div><dl class="paramcmts block"><dt class="param">other</dt><dd class="cmt"><p>another BindingModule to cons with this one. Any duplicates will favor the bindings from this
+rather than other.
+</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.scala_tools.subcut.inject.BindingModule" class="extype" href="BindingModule.html">BindingModule</a></dd></dl></div>
     </li></ol>
             </div>
+
+        
 
         <div name="org.scala_tools.subcut.inject.BindingModule" class="parent">
               <h3>Inherited from <a name="org.scala_tools.subcut.inject.BindingModule" class="extype" href="BindingModule.html">BindingModule</a></h3>

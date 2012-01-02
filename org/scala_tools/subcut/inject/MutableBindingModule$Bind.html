@@ -203,7 +203,7 @@
         <span class="params">()</span><span class="result">: java.lang.Class[_]</span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#hashCode" data-isabs="false">
       <a id="hashCode():Int"></a>
       <h4 class="signature">
@@ -215,6 +215,28 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li visbl="pub" name="org.scala_tools.subcut.inject.MutableBindingModule.Bind#idBy" data-isabs="false">
+      <a id="idBy(String):Bind[T]"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">idBy</span>
+        
+        <span class="params">(<span name="name">name: String</span>)</span><span class="result">: <a name="org.scala_tools.subcut.inject.MutableBindingModule.Bind" class="extype" href="">Bind</a>[T]</span>
+      </span>
+      </h4>
+      
+    </li><li visbl="pub" name="org.scala_tools.subcut.inject.MutableBindingModule.Bind#idBy" data-isabs="false">
+      <a id="idBy(Symbol):Bind[T]"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">idBy</span>
+        
+        <span class="params">(<span name="symbol">symbol: <span name="scala.Symbol" class="extype">Symbol</span></span>)</span><span class="result">: <a name="org.scala_tools.subcut.inject.MutableBindingModule.Bind" class="extype" href="">Bind</a>[T]</span>
+      </span>
+      </h4>
+      
     </li><li visbl="pub" name="org.scala_tools.subcut.inject.MutableBindingModule.Bind#identifiedBy" data-isabs="false">
       <a id="identifiedBy(Symbol):Bind[T]"></a>
       <h4 class="signature">
@@ -230,7 +252,7 @@ in combination with the trait type being bound, a unique key is formed.</p><div 
 in combination with the trait type being bound, a unique key is formed. This form takes a symbol name, but
 there is an overloaded version that allows a string to be used instead. The symbol and string names are
 interchangeable, i.e. 'maxPoolSize and &quot;maxPoolSize&quot; are equivalent both in definition and in usage.</p><p>Typical usage:
-<code>module.bind[Int] identifiedBy 'maxPoolSize toInstance 30</code></p></div><dl class="paramcmts block"><dt class="param">symbol</dt><dd class="cmt"><p>the symbol name to identify this binding when used in combination with the type parameter.
+<code>module.bind [Int] identifiedBy 'maxPoolSize toSingle 30</code></p></div><dl class="paramcmts block"><dt class="param">symbol</dt><dd class="cmt"><p>the symbol name to identify this binding when used in combination with the type parameter.
 </p></dd></dl></div>
     </li><li visbl="pub" name="org.scala_tools.subcut.inject.MutableBindingModule.Bind#identifiedBy" data-isabs="false">
       <a id="identifiedBy(String):Bind[T]"></a>
@@ -247,7 +269,7 @@ in combination with the trait type being bound, a unique key is formed.</p><div 
 in combination with the trait type being bound, a unique key is formed. This form takes a string name, but
 there is an overloaded version that allows a symbol to be used instead. The symbol and string names are
 interchangeable, i.e. 'maxPoolSize and &quot;maxPoolSize&quot; are equivalent both in definition and in usage.</p><p>Typical usage:
-<code>module.bind[Int] identifiedBy "maxPoolSize" toInstance 30</code></p></div><dl class="paramcmts block"><dt class="param">n</dt><dd class="cmt"><p>the string name to identify this binding when used in combination with the type parameter.
+<code>module.bind [Int] identifiedBy "maxPoolSize" toSingle 30</code></p></div><dl class="paramcmts block"><dt class="param">n</dt><dd class="cmt"><p>the string name to identify this binding when used in combination with the type parameter.
 </p></dd></dl></div>
     </li><li visbl="pub" name="org.scala_tools.subcut.inject.MutableBindingModule.Bind#instanceOfClass" data-isabs="false">
       <a id="instanceOfClass[I&lt;:T](Manifest[I],Manifest[T]):ClassInstanceProvider[T]"></a>
@@ -340,12 +362,12 @@ reflection is used to create the class instance.
       </span>
       </h4>
       <p class="shortcomment cmt">Bind to a class instance provider of class.</p><div class="fullcomment"><div class="comment cmt"><p>Bind to a class instance provider of class. Intended to be used with instanceOfClass like this:
-<code>module.bind[DBLookup] to instanceOfClass[MySQLDBLookup]</code>. Will provide a new
+<code>module.bind [DBLookup] to instanceOfClass [MySQLDBLookup]</code>. Will provide a new
 instance of the class configured for each injection site. Any instance provided in this way
 must provide a zero parameter default constructor since reflection is used to create the instance
 and it will fail if there is no default constructor. Note that this is true even for implicit
 parameters, so you cannot use this form if you wish to provide the implicit binding chain to the
-target instance. Use a toProvider instead.</p></div><dl class="paramcmts block"><dt class="param">instOfClass</dt><dd class="cmt"><p>the class instance provder to use for the binding. Use instanceOfClass method
+target instance. Use a toProvider instead.</p></div><dl class="paramcmts block"><dt class="param">instOfClass</dt><dd class="cmt"><p>the class instance provider to use for the binding. Use instanceOfClass method
 to conveniently obtain the right thing.
 </p></dd></dl></div>
     </li><li visbl="pub" name="org.scala_tools.subcut.inject.MutableBindingModule.Bind#to" data-isabs="false">
@@ -359,7 +381,7 @@ to conveniently obtain the right thing.
       </span>
       </h4>
       <p class="shortcomment cmt">A convenient operator to bind to an instance of None (in this definition).</p><div class="fullcomment"><div class="comment cmt"><p>A convenient operator to bind to an instance of None (in this definition). Can be used instead of
-unbind. For example <code>module.bind[Int] identified by 'timeLimit to None</code></p></div></div>
+unbind. For example <code>module.bind [Int] idBy 'timeLimit to None</code></p></div></div>
     </li><li visbl="pub" name="org.scala_tools.subcut.inject.MutableBindingModule.Bind#toClass" data-isabs="false">
       <a id="toClass[I&lt;:T](Manifest[I],Manifest[T]):Unit"></a>
       <h4 class="signature">
@@ -379,40 +401,6 @@ Note that the provided type I must provide a zero args default constructor for t
 It uses reflection to instantiate the class and will fail at injection time if no such default constructor is
 available.
 </p></div></div>
-    </li><li visbl="pub" name="org.scala_tools.subcut.inject.MutableBindingModule.Bind#toInstance" data-isabs="false">
-      <a id="toInstance[I&lt;:T](I):Unit"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">toInstance</span>
-        <span class="tparams">[<span name="I">I &lt;: T</span>]</span>
-        <span class="params">(<span name="instance">instance: I</span>)</span><span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
-      </span>
-      </h4>
-      <p class="shortcomment cmt">Bind to a single instance of I where I is an instance of any subtype of T.</p><div class="fullcomment"><div class="comment cmt"><p>Bind to a single instance of I where I is an instance of any subtype of T. This will effectively provide
-a singleton binding for any injected instance. As such, any instances used here should be thread safe if
-they are to be used in threaded execution.</p></div><dl class="paramcmts block"><dt class="param">instance</dt><dd class="cmt"><p>a single instance of type I &lt;: T. The same instance will be returned for any matching binding.
-</p></dd></dl></div>
-    </li><li visbl="pub" name="org.scala_tools.subcut.inject.MutableBindingModule.Bind#toLazyInstance" data-isabs="false">
-      <a id="toLazyInstance[I&lt;:T](⇒ I):Unit"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">toLazyInstance</span>
-        <span class="tparams">[<span name="I">I &lt;: T</span>]</span>
-        <span class="params">(<span name="function">function: ⇒ I</span>)</span><span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
-      </span>
-      </h4>
-      <p class="shortcomment cmt">Bind to a single instance of I where I is a subtype of the bound type T.</p><div class="fullcomment"><div class="comment cmt"><p>Bind to a single instance of I where I is a subtype of the bound type T. The single instance will not be
-decided until the first time the matching binding is injected, but from then on will always be the same
-instance. This is to provide a way to cope with injection of items that may not have been configured at
-the time of application startup, but will be configured before the first usage. It can also be used for
-object with a slow initialization or ones that may never be used in a run. Since the same instance is
-always provided after the first evaluation, care should be taken that the threading capabilities of the
-object bound should match the execution environment, in other words, thread safety of the returned instance
-is your responsibility.</p></div><dl class="paramcmts block"><dt class="param">function</dt><dd class="cmt"><p>a by-name function that is evaluated on the first injection of this binding, and after that
-will always return the same instance I, where I is any subtype of T.
-</p></dd></dl></div>
     </li><li visbl="pub" name="org.scala_tools.subcut.inject.MutableBindingModule.Bind#toProvider" data-isabs="false">
       <a id="toProvider[I&lt;:T](⇒ I):Unit"></a>
       <h4 class="signature">
@@ -430,6 +418,38 @@ the correct current web session for the current user, etc. and provide that back
 The function will be evaluated for each injection of the matching binding and may return a unique instance
 each time, or the same one, or anything in between.</p></div><dl class="paramcmts block"><dt class="param">function</dt><dd class="cmt"><p>a by-name function returning type I where I is a subtype of the bound type T.
 </p></dd></dl></div>
+    </li><li visbl="pub" name="org.scala_tools.subcut.inject.MutableBindingModule.Bind#toSingle" data-isabs="false">
+      <a id="toSingle[I&lt;:T](⇒ I):Unit"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">toSingle</span>
+        <span class="tparams">[<span name="I">I &lt;: T</span>]</span>
+        <span class="params">(<span name="function">function: ⇒ I</span>)</span><span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Bind to a single instance of I where I is a subtype of the bound type T.</p><div class="fullcomment"><div class="comment cmt"><p>Bind to a single instance of I where I is a subtype of the bound type T. The single instance will not be
+decided until the first time the matching binding is injected, but from then on will always be the same
+instance. This is to provide a way to cope with injection of items that may not have been configured at
+the time of application startup, but will be configured before the first usage. It can also be used for
+object with a slow initialization or ones that may never be used in a run. Since the same instance is
+always provided after the first evaluation, care should be taken that the threading capabilities of the
+object bound should match the execution environment, in other words, thread safety of the returned instance
+is your responsibility.</p></div><dl class="paramcmts block"><dt class="param">function</dt><dd class="cmt"><p>a by-name function that is evaluated on the first injection of this binding, and after that
+will always return the same instance I, where I is any subtype of T.
+</p></dd></dl></div>
+    </li><li visbl="pub" name="org.scala_tools.subcut.inject.MutableBindingModule.Bind#toSingleInstance" data-isabs="false">
+      <a id="toSingleInstance[I&lt;:T](⇒ I):Unit"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">toSingleInstance</span>
+        <span class="tparams">[<span name="I">I &lt;: T</span>]</span>
+        <span class="params">(<span name="function">function: ⇒ I</span>)</span><span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Synonym for #toSingle, provided for consistency
+</p>
     </li><li visbl="pub" name="scala.AnyRef#toString" data-isabs="false">
       <a id="toString():String"></a>
       <h4 class="signature">
@@ -485,6 +505,8 @@ each time, or the same one, or anything in between.</p></div><dl class="paramcmt
         </dd></dl></div>
     </li></ol>
             </div>
+
+        
 
         <div name="scala.AnyRef" class="parent">
               <h3>Inherited from AnyRef</h3>

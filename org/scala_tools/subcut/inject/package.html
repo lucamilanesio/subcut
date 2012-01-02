@@ -51,7 +51,30 @@ Time: 10:06 AM
 
         <div class="types members" id="types">
               <h3>Type Members</h3>
-              <ol><li visbl="pub" name="org.scala_tools.subcut.inject.BindingException" data-isabs="false">
+              <ol><li visbl="pub" name="org.scala_tools.subcut.inject.AnnotationsInjectPlugin" data-isabs="false">
+      <a id="AnnotationsInjectPlugin:AnnotationsInjectPlugin"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="AnnotationsInjectPlugin.html"><span class="name">AnnotationsInjectPlugin</span></a>
+        
+        <span class="result"> extends Plugin</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Created by IntelliJ IDEA.</p>
+    </li><li visbl="pub" name="org.scala_tools.subcut.inject.AutoInjectable" data-isabs="true">
+      <a id="AutoInjectable:AutoInjectable"></a>
+      <h4 class="signature">
+      <span class="kind">trait</span>
+      <span class="symbol"> 
+        <a href="AutoInjectable.html"><span class="name">AutoInjectable</span></a>
+        
+        <span class="result"> extends Injectable</span>
+      </span>
+      </h4>
+      <p class="comment cmt">AutoInjectable is identical to Injectable except that if you are using the compiler plugin, the implicit
+bindingModule parameter will be automatically filled in for you.</p>
+    </li><li visbl="pub" name="org.scala_tools.subcut.inject.BindingException" data-isabs="false">
       <a id="BindingException:BindingException"></a>
       <h4 class="signature">
       <span class="kind">class</span>
@@ -85,6 +108,17 @@ Time: 10:06 AM
       </h4>
       <p class="comment cmt">A trait that can be used to provide the cake-like ability to mix in a trait upon instance creation
 rather than using the implicit parameter.</p>
+    </li><li visbl="pub" name="org.scala_tools.subcut.inject.Inject" data-isabs="false">
+      <a id="Inject:Inject"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="Inject.html"><span class="name">Inject</span></a>
+        
+        <span class="result"> extends Annotation with StaticAnnotation</span>
+      </span>
+      </h4>
+      
     </li><li visbl="pub" name="org.scala_tools.subcut.inject.Injectable" data-isabs="true">
       <a id="Injectable:Injectable"></a>
       <h4 class="signature">
@@ -143,6 +177,8 @@ Injectable.injectIfMissing
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.scala_tools.subcut.inject.package" class="extype" href="package$.html">package</a></dd></dl></div>
     </li></ol>
             </div>
+
+        
 
         
 

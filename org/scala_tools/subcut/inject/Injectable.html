@@ -37,6 +37,9 @@ can provide flexible and mostly invisible bindings all the way down an object in
 </p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent">AnyRef, <span name="scala.Any" class="extype">Any</span></div>
+        </div><div class="toggleContainer block">
+          <span class="toggle">Known Subclasses</span>
+          <div class="subClasses hiddenContent"><a name="org.scala_tools.subcut.inject.AutoInjectable" class="extype" href="AutoInjectable.html">AutoInjectable</a></div>
         </div></div>
         
 
@@ -69,7 +72,7 @@ can provide flexible and mostly invisible bindings all the way down an object in
               <ol><li visbl="pub" name="org.scala_tools.subcut.inject.Injectable#bindingModule" data-isabs="true">
       <a id="bindingModule:BindingModule"></a>
       <h4 class="signature">
-      <span class="kind">val</span>
+      <span class="kind">def</span>
       <span class="symbol"> 
         <span class="name">bindingModule</span>
         
@@ -208,7 +211,7 @@ can provide flexible and mostly invisible bindings all the way down an object in
         <span class="params">()</span><span class="result">: java.lang.Class[_]</span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#hashCode" data-isabs="false">
       <a id="hashCode():Int"></a>
       <h4 class="signature">
@@ -359,6 +362,49 @@ If no instance is provided (i.e. the existing impl passed in is null) and no bin
 BindingException will be thrown. If an existing impl is provided (not null), then the binding will not be
 used and does not need to be present. This form of the inject does not need a provided ID symbol or string.</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>an instance configured by the binding module to use for the given trait
 </p></dd></dl></div>
+    </li><li visbl="pub" name="org.scala_tools.subcut.inject.Injectable#injectOptional" data-isabs="false">
+      <a id="injectOptional[T](String)(Manifest[T]):Option[T]"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">injectOptional</span>
+        <span class="tparams">[<span name="T">T</span>]</span>
+        <span class="params">(<span name="name">name: String</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="m">m: <span name="scala.reflect.Manifest" class="extype">Manifest</span>[T]</span>)</span><span class="result">: <span name="scala.Option" class="extype">Option</span>[T]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Inject an optional instance for the given trait based on the class type required and an ID string.</p><div class="fullcomment"><div class="comment cmt"><p>Inject an optional instance for the given trait based on the class type required and an ID string. If there is no
+matching binding, this method will return None. The string ID is interchangeable with the
+symbol version of the same ID, in other words 'maxPoolSize and &quot;maxPoolSize&quot; are considered equivalent by the
+lookup mechanism.</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>an optional instance configured by the binding module to use for the given trait and ID
+</p></dd></dl></div>
+    </li><li visbl="pub" name="org.scala_tools.subcut.inject.Injectable#injectOptional" data-isabs="false">
+      <a id="injectOptional[T](Symbol)(Manifest[T]):Option[T]"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">injectOptional</span>
+        <span class="tparams">[<span name="T">T</span>]</span>
+        <span class="params">(<span name="symbol">symbol: <span name="scala.Symbol" class="extype">Symbol</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="m">m: <span name="scala.reflect.Manifest" class="extype">Manifest</span>[T]</span>)</span><span class="result">: <span name="scala.Option" class="extype">Option</span>[T]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Inject an optional instance for the given trait based on the class type required and an ID symbol.</p><div class="fullcomment"><div class="comment cmt"><p>Inject an optional instance for the given trait based on the class type required and an ID symbol. If there is no
+matching binding, this method will return None. The Symbol provided will be converted to a string
+prior to the lookup, so the symbol is interchangeable with the string version of the same ID, in other words
+'maxPoolSize and &quot;maxPoolSize&quot; are considered equivalent by the lookup mechanism.</p></div><dl class="paramcmts block"><dt class="param">symbol</dt><dd class="cmt"><p>the identifying name to look up for the binding, e.g. 'maxPoolSize</p></dd><dt>returns</dt><dd class="cmt"><p>an optional instance configured by the binding module to use for the given trait and ID
+</p></dd></dl></div>
+    </li><li visbl="pub" name="org.scala_tools.subcut.inject.Injectable#injectOptional" data-isabs="false">
+      <a id="injectOptional[T](Manifest[T]):Option[T]"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">injectOptional</span>
+        <span class="tparams">[<span name="T">T</span>]</span>
+        <span class="params">(<span class="implicit">implicit </span><span name="m">m: <span name="scala.reflect.Manifest" class="extype">Manifest</span>[T]</span>)</span><span class="result">: <span name="scala.Option" class="extype">Option</span>[T]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Inject an optional instance for the given trait based on the class type required.</p><div class="fullcomment"><div class="comment cmt"><p>Inject an optional instance for the given trait based on the class type required. If there is no binding, this
+method will return None. This form is for straight trait injection without an identifying name.</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>an optional instance configured by the binding module to use for the given trait.
+</p></dd></dl></div>
     </li><li visbl="pub" name="scala.Any#isInstanceOf" data-isabs="false">
       <a id="isInstanceOf[T0]:Boolean"></a>
       <h4 class="signature">
@@ -469,6 +515,8 @@ used and does not need to be present. This form of the inject does not need a pr
         </dd></dl></div>
     </li></ol>
             </div>
+
+        
 
         <div name="scala.AnyRef" class="parent">
               <h3>Inherited from AnyRef</h3>
