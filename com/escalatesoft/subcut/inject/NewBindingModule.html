@@ -34,12 +34,12 @@ takes a function to evaluate, and passes this on to a bindings method which can 
 the bindingModule using the function on demand. The binding module loaned to the passed in function
 is mutable, allowing the convenient DSL to be used, then the bindings are copied to an immutable
 class upon exit of the bindings evaluation.</p><p>To use this class:</p><p><pre>
-class ProductionBindings extends NewBindingModule({ implicit module =>
+class ProductionBindings extends NewBindingModule(module => {
    import module._   // for convenience
-   bind [DBLookup] toSingle new MySQLLookup
-   bind [WebService] to newInstanceOf[RealWebService]
+   bind [DBLookup] to moduleInstanceOf [MySQLLookup]
+   bind [WebService] to newInstanceOf [RealWebService]
    bind [Int] identifiedBy 'maxPoolSize toSingle 10   // could also use idBy instead of identifiedBy
-   bind [QueryService] toSingle { new SlowInitQueryService }
+   bind [QueryService] toProvider { implicit module => new SlowInitQueryService }
 })
 </pre></p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
